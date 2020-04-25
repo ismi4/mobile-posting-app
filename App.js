@@ -1,14 +1,24 @@
+import "react-native-gesture-handler";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>Hi</Text>
-    </View>
-  );
+const Stack = createStackNavigator();
+
+class App extends React.Component {
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -29,3 +39,5 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default App;
