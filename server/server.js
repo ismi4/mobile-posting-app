@@ -13,7 +13,7 @@ mongoose.connect(DB, {
     useFindAndModify: false
 }).then(() => console.log('DB is connected!'));
 
-const port = 3000
+const port = 3000;
 app.listen(port, '127.0.0.1', () => {
     console.log(`Listening on port ${port}!`);
 });
