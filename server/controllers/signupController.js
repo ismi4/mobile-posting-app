@@ -12,7 +12,25 @@ exports.createUser = (req, res) => {
             email: req.body.email,
             password: hash
         });
-        user.save();
+
+        user.save().catch((err) => {
+            if (err) {
+                if (err.name === 'MongoError' && err.code === 11000) {
+                    return res.status(500).json({
+                        status: 'failure',
+                        message: 'There was an error with the database - Duplication Key Error'
+                    });
+                };
+
+                return res.status(500).json({
+                    status: 'failure',
+                    message: 'There was an error with the database'
+                });
+            };
+        });
     });
 
+
+
 };
+
