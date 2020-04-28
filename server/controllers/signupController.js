@@ -20,20 +20,21 @@ exports.createUser = (req, res) => {
                     status: 'failure',
                     message: 'There was an error with the database - Duplication Key Error'
                 });
+            } else if (err.name === 'MongoError') {
+                return res.status(500).json({
+                    status: 'failure',
+                    message: 'There was an error with the database'
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'success',
+                    message: 'The account was created!'
+                });
             };
 
-            return res.status(500).json({
-                status: 'failure',
-                message: 'There was an error with the database'
-            });
+
 
         });
-
-
-        // res.status(201).json({
-        //     status: 'success',
-        //     message: 'User successfully created!'
-        // });
 
 
 
