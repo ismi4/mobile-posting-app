@@ -20,7 +20,8 @@ exports.createUser = async (req, res) => {
     } catch (err) {
         res.status(500).json({
             status: 'failure',
-            message: 'There was an error with the database'
+            message: 'There was an error with the database',
+            error: err
         });
     };
 
@@ -32,8 +33,8 @@ async function hashPassword(password) {
 
     const hashedPassword = await new Promise((resolve, reject) => {
         bcrypt.hash(password, saltRounds, (err, hash) => {
-            if (err) reject(err)
-            resolve(hash)
+            if (err) reject(err);
+            resolve(hash);
         });
     });
 
