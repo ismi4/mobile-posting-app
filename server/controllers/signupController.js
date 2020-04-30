@@ -2,42 +2,40 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = require('./../models/userModel');
 
-const saltRounds = 10;
+exports.createUser = async (req, res) => {
+    try {
+        const password = await hashPassword(req.body.password);
 
-exports.createUser = (req, res) => {
-
-    bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-        const user = new User({
+        await User.create({
             username: req.body.username,
             email: req.body.email,
-            password: hash
+            password
+        })
+
+        res.status(201).json({
+            status: 'success',
+            message: 'The account was created!'
         });
 
-        user.save().catch((err) => {
-
-            if (err.name === 'MongoError' && err.code === 11000) {
-                return res.status(500).json({
-                    status: 'failure',
-                    message: 'There was an error with the database - Duplication Key Error'
-                });
-            } else if (err.name === 'MongoError') {
-                return res.status(500).json({
-                    status: 'failure',
-                    message: 'There was an error with the database'
-                });
-            } else {
-                return res.status(200).json({
-                    status: 'success',
-                    message: 'The account was created!'
-                });
-            };
-
-
-
+    } catch (err) {
+        res.status(500).json({
+            status: 'failure',
+            message: 'There was an error with the database'
         });
+    };
 
+};
 
+async function hashPassword(password) {
 
+    const saltRounds = 10;
+
+    const hashedPassword = await new Promise((resolve, reject) => {
+        bcrypt.hash(password, saltRounds, (err, hash) => {
+            if (err) reject(err)
+            resolve(hash)
+        });
     });
 
+    return hashedPassword;
 };
