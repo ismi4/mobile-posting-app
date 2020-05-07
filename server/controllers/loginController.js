@@ -8,18 +8,9 @@ exports.loginValidation = async (req, res) => {
         const user = await User.findOne({ username: req.body.username });
         
         if (user) {
-            const result = await passwordValidation(req.body.password, user.password);
 
-            if (result) {
-                res.status(200).json({
-                    status: 'success'
-                });
-            } else {
-                res.status(500).json({
-                    status: 'failure',
-                    message: 'The password is incorrect'
-                });
-            };
+            await passwordValidation(res, req.body.password, user.password);
+            
         } else {
             res.status(500).json({
                 status: 'failure',
@@ -34,7 +25,7 @@ exports.loginValidation = async (req, res) => {
     };
 };
 
-async function passwordValidation(password, dbPassword) {
+async function passwordValidation(res, password, dbPassword) {
 
     const result = await new Promise((resolve, reject) => {
         bcrypt.compare(password, dbPassword, (err, res) => {
@@ -42,6 +33,15 @@ async function passwordValidation(password, dbPassword) {
             resolve(res);
         }); 
     });
-
-    return result;
+    
+    if (result) {
+        res.status(200).json({
+            status: 'success'
+        });
+    } else {
+        res.status(500).json({
+            status: 'failure',
+            message: 'The password is incorrect'
+        });
+    };
 };
