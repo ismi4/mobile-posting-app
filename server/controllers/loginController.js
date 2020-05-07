@@ -6,17 +6,13 @@ exports.loginValidation = async (req, res) => {
 
     try {
         const user = await User.findOne({ username: req.body.username });
-        
-        if (user) {
+        if (!user) res.status(500).json({
+            status: 'failure',
+            message: 'The account does not exist'
+        });
 
-            await passwordValidation(res, req.body.password, user.password);
-            
-        } else {
-            res.status(500).json({
-                status: 'failure',
-                message: 'The account does not exist'
-            });
-        };
+        await passwordValidation(res, req.body.password, user.password); 
+        
     } catch (err) {
         res.status(500).json({
             status: 'failure',
@@ -34,14 +30,12 @@ async function passwordValidation(res, password, dbPassword) {
         }); 
     });
     
-    if (result) {
-        res.status(200).json({
-            status: 'success'
-        });
-    } else {
-        res.status(500).json({
-            status: 'failure',
-            message: 'The password is incorrect'
-        });
-    };
+    if (!result) res.status(500).json({
+        status: 'failure',
+        message: 'The password is incorrect'
+    });
+
+    res.status(200).json({
+        status: 'success'
+    });
 };
