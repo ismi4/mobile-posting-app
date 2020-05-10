@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import users from "../data/users";
 import { LinearGradient } from "expo-linear-gradient";
+import OrangeButton from "../ui/OrangeButton";
 
 class Login extends React.Component {
   state = {
@@ -27,8 +28,13 @@ class Login extends React.Component {
       );
     });
     if (curr == undefined) {
-      this.state.emailInput = "";
-      this.state.passwordInput = "";
+      this.setState({
+        emailInput: "",
+      });
+      this.setState({
+        passwordInput: "",
+      });
+
       alert("We didn't find you in our db!");
     } else {
       navigation.navigate("Posts", { user: curr });
@@ -48,14 +54,14 @@ class Login extends React.Component {
         }}
       >
         <View style={{ width: 300 }}>
-          <View style={{}}>
+          <View>
             <TextInput
               placeholder={"ex. johndoe@mail.com"}
               style={{
                 height: 40,
                 borderColor: "#a1a7c2",
                 borderRadius: 20,
-                borderWidth: 1,
+                borderWidth: 2,
                 paddingHorizontal: 10,
                 color: "white",
                 textAlign: "center",
@@ -65,7 +71,11 @@ class Login extends React.Component {
               value={this.state.emailInput}
             />
             <View style={{ alignItems: "center" }}>
-              <Text style={{ color: "white", marginTop: 5 }}>Email</Text>
+              <Text
+                style={{ color: "white", marginTop: 5, fontWeight: "bold" }}
+              >
+                Email
+              </Text>
             </View>
           </View>
           <View style={{ marginTop: 15 }}>
@@ -75,71 +85,35 @@ class Login extends React.Component {
                 height: 40,
                 borderColor: "#a1a7c2",
                 borderRadius: 20,
-                borderWidth: 1,
+                borderWidth: 2,
                 paddingHorizontal: 10,
                 color: "white",
                 textAlign: "center",
-                fontSize: 13,
+                fontSize: 15,
               }}
               onChangeText={(text) => this.setState({ passwordInput: text })}
               value={this.state.passwordInput}
             />
             <View style={{ alignItems: "center" }}>
-              <Text style={{ color: "white", marginTop: 5 }}>Password</Text>
+              <Text
+                style={{ color: "white", marginTop: 5, fontWeight: "bold" }}
+              >
+                Password
+              </Text>
             </View>
           </View>
-          <View style={{ width: "77%", alignSelf: "center", marginTop: 27 }}>
-            <TouchableOpacity
-              style={{
-                height: 40,
-                alignContent: "center",
-                justifyContent: "center",
-                borderRadius: 20,
-              }}
-              onPress={this.validate}
-            >
-              <LinearGradient
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={["#df4234", "#f16621", "#ea9711"]}
-                style={{
-                  padding: 10,
-                  alignItems: "center",
-                  borderRadius: 15,
-                }}
-              >
-                <Text style={{ color: "white", alignSelf: "center" }}>
-                  LOGIN
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-          <View style={{ width: "77%", alignSelf: "center", marginTop: 7 }}>
-            <TouchableOpacity
-              style={{
-                height: 40,
-                alignContent: "center",
-                justifyContent: "center",
-                borderRadius: 20,
-              }}
-              onPress={() => navigation.navigate("Register")}
-            >
-              <LinearGradient
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={["#df4234", "#f16621", "#ea9711"]}
-                style={{
-                  padding: 10,
-                  alignItems: "center",
-                  borderRadius: 15,
-                }}
-              >
-                <Text style={{ color: "white", alignSelf: "center" }}>
-                  REGISTER
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
+
+          <OrangeButton
+            onPress={this.validate}
+            text="LOGIN"
+            styles={{ marginTop: 17 }}
+          />
+
+          <OrangeButton
+            onPress={() => navigation.navigate("Register")}
+            text="REGISTER"
+            styles={{ marginTop: 5 }}
+          />
         </View>
       </View>
     );

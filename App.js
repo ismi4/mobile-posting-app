@@ -14,7 +14,17 @@ class App extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              headerStyle: { backgroundColor: "#414769" },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Posts" component={Posts} />
         </Stack.Navigator>
