@@ -1,7 +1,15 @@
 import * as React from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import users from "../data/users";
+import { LinearGradient } from "expo-linear-gradient";
 
 class Login extends React.Component {
   state = {
@@ -34,49 +42,103 @@ class Login extends React.Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: "white",
+          backgroundColor: "#414769",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
         <View style={{ width: 300 }}>
-          <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              paddingHorizontal: 10,
-            }}
-            onChangeText={(text) => this.setState({ emailInput: text })}
-            value={this.state.emailInput}
-          />
-          <View style={{ alignItems: "center" }}>
-            <Text>Email</Text>
+          <View style={{}}>
+            <TextInput
+              placeholder={"ex. johndoe@mail.com"}
+              style={{
+                height: 40,
+                borderColor: "#a1a7c2",
+                borderRadius: 20,
+                borderWidth: 1,
+                paddingHorizontal: 10,
+                color: "white",
+                textAlign: "center",
+                fontSize: 15,
+              }}
+              onChangeText={(text) => this.setState({ emailInput: text })}
+              value={this.state.emailInput}
+            />
+            <View style={{ alignItems: "center" }}>
+              <Text style={{ color: "white", marginTop: 5 }}>Email</Text>
+            </View>
           </View>
-          <View style={{ marginTop: 33 }}>
+          <View style={{ marginTop: 15 }}>
             <TextInput
               secureTextEntry={true}
               style={{
                 height: 40,
-                borderColor: "gray",
+                borderColor: "#a1a7c2",
+                borderRadius: 20,
                 borderWidth: 1,
                 paddingHorizontal: 10,
+                color: "white",
+                textAlign: "center",
+                fontSize: 13,
               }}
               onChangeText={(text) => this.setState({ passwordInput: text })}
               value={this.state.passwordInput}
             />
             <View style={{ alignItems: "center" }}>
-              <Text>Password</Text>
+              <Text style={{ color: "white", marginTop: 5 }}>Password</Text>
             </View>
           </View>
           <View style={{ width: "77%", alignSelf: "center", marginTop: 27 }}>
-            <Button title="LOGIN" onPress={this.validate} />
+            <TouchableOpacity
+              style={{
+                height: 40,
+                alignContent: "center",
+                justifyContent: "center",
+                borderRadius: 20,
+              }}
+              onPress={this.validate}
+            >
+              <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={["#df4234", "#f16621", "#ea9711"]}
+                style={{
+                  padding: 10,
+                  alignItems: "center",
+                  borderRadius: 15,
+                }}
+              >
+                <Text style={{ color: "white", alignSelf: "center" }}>
+                  LOGIN
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
           <View style={{ width: "77%", alignSelf: "center", marginTop: 7 }}>
-            <Button
+            <TouchableOpacity
+              style={{
+                height: 40,
+                alignContent: "center",
+                justifyContent: "center",
+                borderRadius: 20,
+              }}
               onPress={() => navigation.navigate("Register")}
-              title="REGISTER"
-            />
+            >
+              <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={["#df4234", "#f16621", "#ea9711"]}
+                style={{
+                  padding: 10,
+                  alignItems: "center",
+                  borderRadius: 15,
+                }}
+              >
+                <Text style={{ color: "white", alignSelf: "center" }}>
+                  REGISTER
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
