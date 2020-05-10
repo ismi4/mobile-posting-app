@@ -1,11 +1,30 @@
 import * as React from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import users from "../data/users";
 
 class Login extends React.Component {
   state = {
     emailInput: "",
     passwordInput: "",
+  };
+
+  validate = () => {
+    const { navigation } = this.props;
+
+    let curr = users.find((user) => {
+      return (
+        user.email === this.state.emailInput &&
+        user.password === this.state.passwordInput
+      );
+    });
+    if (curr == undefined) {
+      this.state.emailInput = "";
+      this.state.passwordInput = "";
+      alert("We didn't find you in our db!");
+    } else {
+      navigation.navigate("Posts", { user: curr });
+    }
   };
 
   render() {
@@ -51,7 +70,7 @@ class Login extends React.Component {
             </View>
           </View>
           <View style={{ width: "77%", alignSelf: "center", marginTop: 27 }}>
-            <Button title="LOGIN" />
+            <Button title="LOGIN" onPress={this.validate} />
           </View>
           <View style={{ width: "77%", alignSelf: "center", marginTop: 7 }}>
             <Button
